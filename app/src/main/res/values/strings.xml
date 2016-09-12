@@ -2,4 +2,6 @@
     <string name="app_name">ToDoApp</string>
     <string name="btn_add">Add</string>
     <string name="btn_add_hint">Add a todo item</string>
+    <string name="edit_text_activity_title">Edit Item</string>
+    <string name="edit_text_activity_save">Save</string>
 </resources>
