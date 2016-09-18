@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_TEXT_ITEM = "TEXT";
     public static final String EXTRA_TEXT_POSITION = "POSITION";
-    public static final String EXTRA_DATE = "DATE";
-    public static final String EXTRA_PRIORITY = "PRIORITY";
 
     public static final Integer EDIT_TEXT_ACTIVITY_REQUEST_CODE = 1;
 
@@ -42,33 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         itemsAdapter = new CustomAdapter(this, items);
         listView.setAdapter(itemsAdapter);
-
-        setListViewDeleteListener();
-        setListViewEditListener();
-    }
-
-    private void setListViewDeleteListener() {
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
-                items.remove(pos);
-                itemsAdapter.notifyDataSetChanged();
-                writeItems();
-                return true;
-            }
-        });
-    }
-
-    private void setListViewEditListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View item, int pos, long id) {
-                Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
-                intent.putExtra(EXTRA_TEXT_ITEM, items.get(pos).name);
-                intent.putExtra(EXTRA_TEXT_POSITION, pos);
-                startActivityForResult(intent, EDIT_TEXT_ACTIVITY_REQUEST_CODE);
-            }
-        });
     }
 
     public void onClickAdd(View view) {
@@ -131,18 +101,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == EDIT_TEXT_ACTIVITY_REQUEST_CODE) {
-            String edittedText = data.getStringExtra(EXTRA_TEXT_ITEM);
-            Calendar dueByDate = data.getParcelableExtra(EXTRA_DATE);
-            ToDoItem.Priority priority = data.getParcelableExtra(EXTRA_PRIORITY);
+            ToDoItem item = data.getParcelableExtra(EXTRA_TEXT_ITEM);
             int position = data.getIntExtra(EXTRA_TEXT_POSITION, 0);
-
-            ToDoItem item = new ToDoItem(edittedText, dueByDate, priority);
 
             items.set(position, item);
             itemsAdapter.notifyDataSetChanged();
             writeItems();
 
-            String toastString = "Changed " + edittedText;
+            String toastString = "Changed " + item.name;
             Toast.makeText(this, toastString, Toast.LENGTH_SHORT).show();
         }
     }

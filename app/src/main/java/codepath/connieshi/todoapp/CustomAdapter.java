@@ -41,8 +41,8 @@ public class CustomAdapter extends ArrayAdapter<ToDoItem> {
             public void onClick(View v) {
                 int position = (Integer) textViewName.getTag();
                 Intent intent = new Intent(getContext(), EditItemActivity.class);
-                intent.putExtra(MainActivity.EXTRA_TEXT_ITEM, items.get(position).name);
                 intent.putExtra(MainActivity.EXTRA_TEXT_POSITION, position);
+                intent.putExtra(MainActivity.EXTRA_TEXT_ITEM, items.get(position));
                 ((Activity) getContext()).startActivityForResult(intent, MainActivity.EDIT_TEXT_ACTIVITY_REQUEST_CODE);
             }
         });
