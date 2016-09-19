@@ -46,14 +46,16 @@ public class MainActivity extends AppCompatActivity {
         String newInput = editText.getText().toString();
 
         ToDoItem newItem = new ToDoItem(newInput, Calendar.getInstance(), ToDoItem.Priority.HIGH);
-        itemsAdapter.add(newItem);
+
+        items.add(newItem);
+
         editText.setText("");
         writeItems();
     }
 
     public void readItems() {
         File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todoapp.txt");
+        File todoFile = new File(filesDir, "todofile.txt");
         try {
             items.clear();
 
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
                 items.add(new ToDoItem(name, date, priority_enum));
             }
+
         } catch (IOException e) {
             items = new ArrayList<>();
         }
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void writeItems() {
         File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todoapp.txt");
+        File todoFile = new File(filesDir, "todofile.txt");
         try {
             ArrayList<String> stringItems = new ArrayList<>();
             for (ToDoItem item : items) {
