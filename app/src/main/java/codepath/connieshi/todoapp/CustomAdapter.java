@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Created by connieshi on 9/11/16.
+ * Custom adapter for to do item.
  */
 public class CustomAdapter extends ArrayAdapter<ToDoItem> {
     ArrayList<ToDoItem> items;
@@ -45,7 +45,8 @@ public class CustomAdapter extends ArrayAdapter<ToDoItem> {
                 Intent intent = new Intent(getContext(), EditItemActivity.class);
                 intent.putExtra(MainActivity.EXTRA_TEXT_POSITION, position);
                 intent.putExtra(MainActivity.EXTRA_TEXT_ITEM, items.get(position));
-                ((Activity) getContext()).startActivityForResult(intent, MainActivity.EDIT_TEXT_ACTIVITY_REQUEST_CODE);
+                ((Activity) getContext()).startActivityForResult(intent,
+                        MainActivity.EDIT_TEXT_ACTIVITY_REQUEST_CODE);
             }
         });
 

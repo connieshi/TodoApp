@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_TEXT_ITEM = "TEXT";
     public static final String EXTRA_TEXT_POSITION = "POSITION";
-
     public static final Integer EDIT_TEXT_ACTIVITY_REQUEST_CODE = 1;
 
     @NonNull private static ArrayList<ToDoItem> items;
@@ -41,18 +40,24 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(itemsAdapter);
     }
 
+    /**
+     * Saves a new to do item.
+     * @param view
+     */
     public void onClickAdd(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_text);
         String newInput = editText.getText().toString();
 
         ToDoItem newItem = new ToDoItem(newInput, Calendar.getInstance(), ToDoItem.Priority.HIGH);
-
         items.add(newItem);
 
         editText.setText("");
         writeItems();
     }
 
+    /**
+     * Read to do items from a file.
+     */
     public void readItems() {
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todofile.txt");
@@ -78,12 +83,14 @@ public class MainActivity extends AppCompatActivity {
 
                 items.add(new ToDoItem(name, date, priority_enum));
             }
-
         } catch (IOException e) {
             items = new ArrayList<>();
         }
     }
 
+    /**
+     * Write items to a file to save.
+     */
     public void writeItems() {
         File filesDir = getFilesDir();
         File todoFile = new File(filesDir, "todofile.txt");
@@ -101,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Edit and save to do item after return from EditItemActivity.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == EDIT_TEXT_ACTIVITY_REQUEST_CODE) {

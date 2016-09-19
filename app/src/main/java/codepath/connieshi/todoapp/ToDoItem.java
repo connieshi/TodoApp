@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.Calendar;
 
 /**
- * Created by connieshi on 9/11/16.
+ * A to do item with name, priority, and due date.
  */
 public class ToDoItem implements Parcelable {
     enum Priority {
